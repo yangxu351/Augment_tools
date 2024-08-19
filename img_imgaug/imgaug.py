@@ -25,7 +25,7 @@ def arithmetic_drop():
         iaa.Cutout(fill_mode="gaussian", fill_per_channel=True),
         iaa.Dropout(p=(0, 0.2), per_channel=0.5),
         iaa.CoarseDropout((0.01, 0.05), size_percent=(0.02, 0.03), per_channel=0.5),
-        iaa.Dropout2d(p=0.5),
+        # iaa.Dropout2d(p=0.5),
     ]
 
 def arithmetic_noise():
