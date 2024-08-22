@@ -6,6 +6,23 @@ labelID, cw, ch, w, h
 '''
 ia.seed(1093)
 
+
+def get_trans():
+    dict_trans = {
+        'art_aug': artistic(),
+        'ari_dr_aug': arithmetic_drop(),
+        'ari_ns_aug': arithmetic_noise(),
+        'ari_wh_aug': arithmetic_whole(),
+        'bld_aug': blend(),
+        'blu_aug': blur(),
+        'clr_aug': color(),
+        'geo_aug': geometric(),
+        'meta_aug': meta_channel_shuffle(), 
+        'wea_aug': weather(),
+    }
+    return dict_trans
+
+
 ## ---------------
 def arithmetic_whole():
     return [
