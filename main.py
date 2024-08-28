@@ -1,7 +1,7 @@
 import argparse
-from aug_for_cls import aug_cls
-from aug_for_odt import aug_odt
-from aug_for_msk import aug_msk
+from aug_preprocess.aug_for_cls import aug_cls
+from aug_preprocess.aug_for_odt import aug_odt
+from aug_preprocess.aug_for_msk import aug_msk
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
