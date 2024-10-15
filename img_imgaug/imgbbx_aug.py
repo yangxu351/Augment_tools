@@ -36,7 +36,7 @@ def arithmetic_whole():
         iaa.Invert(0.25, per_channel=0.5),
         iaa.Solarize(0.4, threshold=(32, 128)),
         iaa.JpegCompression(compression=(70, 90))
-    ]
+    ] # 10
 
 def arithmetic_drop():
     return [
@@ -45,7 +45,7 @@ def arithmetic_drop():
         iaa.Cutout(fill_mode="gaussian", fill_per_channel=True),
         iaa.Dropout(p=(0.01, 0.15), per_channel=0.5),
         iaa.CoarseDropout((0.01, 0.05), size_percent=(0.02, 0.03), per_channel=0.5),
-    ]
+    ] # 5
 
 def arithmetic_noise():
     return [
@@ -58,11 +58,11 @@ def arithmetic_noise():
         iaa.CoarseSalt(0.03, size_percent=(0.01, 0.1)),
         iaa.Pepper(0.03),
         iaa.CoarsePepper(0.05, size_percent=(0.01, 0.1)),
-    ]
+    ]# 9
 
 ## ---------------
 def artistic():
-    return [iaa.Cartoon()]
+    return [iaa.Cartoon()] # 1
 
 ## ---------------
 def blend():
@@ -78,13 +78,13 @@ def blend():
         iaa.BlendAlphaVerticalLinearGradient(iaa.AddToHue((-100, 100))),
         iaa.BlendAlphaVerticalLinearGradient(iaa.Clouds(), start_at=(0.15, 0.35), end_at=0.0),
         iaa.BlendAlphaCheckerboard(nb_rows=2, nb_cols=(1, 4),foreground=iaa.AddToHue((-100, 100))),
-    ]
+    ] # 11
 
 def blur():
     return [
         iaa.GaussianBlur(sigma=(0.01, 2.5)),
         iaa.BilateralBlur(d=(3, 10), sigma_color=(10, 250), sigma_space=(10, 250)),
-    ]
+    ] # 2
 
 def weather():
     return [
@@ -93,7 +93,7 @@ def weather():
         iaa.FastSnowyLandscape(lightness_threshold=140, lightness_multiplier=2.5),
         iaa.Clouds(),
         iaa.Fog()
-    ]
+    ] # 5
 
 def color():
     return [
@@ -111,7 +111,7 @@ def color():
         iaa.RemoveSaturation(1.0),
         iaa.AddToSaturation((-50, 50)),
         iaa.KMeansColorQuantization(n_colors=(8, 16)) # not good
-    ]
+    ] # 7
 
 
 def geometric():
@@ -126,7 +126,7 @@ def geometric():
         # iaa.Flipud(),
         iaa.CropAndPad(percent=(0, 0.2), pad_mode=["constant", "edge"], pad_cval=(0, 128)),
         
-    ]
+    ] # 7
 
 def meta_channel_shuffle():
-    return [iaa.ChannelShuffle(1)]
+    return [iaa.ChannelShuffle(1)] # 1
