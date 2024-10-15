@@ -24,12 +24,12 @@ def covert_yolo_2_xyxy(lbl, w, h):
     return arr_tl_w, arr_tl_h, arr_br_w, arr_br_h, arr_id
 
 
-def aug_odt(base_dir, dst_img_suffix='.jpg', dst_lbl_suffix='.txt'):
-    src_img_dir = os.path.join(base_dir, 'images')
-    src_lbl_dir = os.path.join(base_dir, 'labels')
-    save_img_dir = os.path.join(base_dir + '_aug', 'images')
+def aug_odt(base_dir, split='val', dst_img_suffix='.jpg', dst_lbl_suffix='.txt'):
+    src_img_dir = os.path.join(base_dir, split, 'images')
+    src_lbl_dir = os.path.join(base_dir, split, 'labels')
+    save_img_dir = os.path.join(base_dir + '_aug', split, 'images')
     make_dir_if_not_exist(save_img_dir, rm=True)
-    save_lbl_dir = os.path.join(base_dir + '_aug', 'labels')
+    save_lbl_dir = os.path.join(base_dir + '_aug', split, 'labels')
     make_dir_if_not_exist(save_lbl_dir, rm=True)
 
 

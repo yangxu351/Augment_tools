@@ -7,12 +7,12 @@ import imgaug as ia
 from utils import make_dir_if_not_exist
 
 
-def aug_msk(base_dir, dst_suffix='.jpg'):
-    src_img_dir = os.path.join(base_dir, 'images')
-    src_msk_dir = os.path.join(base_dir, 'masks')
-    save_img_dir = os.path.join(base_dir + '_aug', 'images')
+def aug_msk(base_dir, split='val', dst_suffix='.jpg'):
+    src_img_dir = os.path.join(base_dir, split, 'images')
+    src_msk_dir = os.path.join(base_dir, split, 'masks')
+    save_img_dir = os.path.join(base_dir + '_aug',split, 'images')
     make_dir_if_not_exist(save_img_dir, rm=True)
-    save_lbl_dir = os.path.join(base_dir + '_aug', 'masks')
+    save_lbl_dir = os.path.join(base_dir + '_aug',split, 'masks')
     make_dir_if_not_exist(save_lbl_dir, rm=True)
 
     img_names = os.listdir(src_img_dir)

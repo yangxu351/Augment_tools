@@ -4,40 +4,90 @@
 ## 原始数据结构
 ```
 data
-|__c1
-|__c2
-|__c3
-...
-|__cn
+|__train
+    |__c1
+    |__c2
+    |__c3
+    ...
+    |__cn
+|__val
+    |__c1
+    |__c2
+    |__c3
+    ...
+    |__cn
+|__test
+    |__c1
+    |__c2
+    |__c3
+    ...
+    |__cn
 ```
 
 ### c* 表示类别文件夹，包含属于该类别的图像数据
 ## 增强后数据结构
 ```
 data_aug
-|__c1
-|__c2
-|...
-...
-|__cn
+|__train
+    |__c1
+    |__c2
+    |__c3
+    ...
+    |__cn
+|__val
+    |__c1
+    |__c2
+    |__c3
+    ...
+    |__cn
+|__test
+    |__c1
+    |__c2
+    |__c3
+    ...
+    |__cn
 ```
 
 # 目标检测数据增强
+
 ```
 data
-|__images
-    |__*.jpg/*.png/....
-|__labels
-    |__*.txt
+|__train
+    |__images
+        |__*.jpg/*.png/....
+    |__labels
+        |__*.txt
+|__val
+    |__images
+        |__*.jpg/*.png/....
+    |__labels
+        |__*.txt
+|__test
+    |__images
+        |__*.jpg/*.png/....
+    |__labels
+        |__*.txt
 ```
-### 其中*.txt 格式满足yolo标注格式: ID cw ch w h
+
+### 其中*.txt 满足归一化后yolo标注格式: ID cw ch w h
 
 
 # 语义分割数据增强
 ```
 data
-|__images
-    |__*.jpg/*.png/....
-|__masks
-    |__*.jpg/*.png/....
+|__train
+    |__images
+        |__*.jpg/*.png/....
+    |__masks
+        |__*.jpg/*.png/....
+|__val
+    |__images
+        |__*.jpg/*.png/....
+    |__masks
+        |__*.jpg/*.png/....
+|__test
+    |__images
+        |__*.jpg/*.png/....
+    |__masks
+        |__*.jpg/*.png/....    
 ```
