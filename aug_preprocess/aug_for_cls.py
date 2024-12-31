@@ -5,7 +5,7 @@ from img_imgaug.imgcls_aug import get_trans
 from utils import make_dir_if_not_exist
 
 
-def aug_cls(base_dir, split='val', dst_img_suffix='.jpg'):
+def imgaug_cls(base_dir, split='val', dst_img_suffix='.jpg'):
     source_dir = os.path.join(base_dir, split)
     save_dir = os.path.join(base_dir + '_aug', split)
     make_dir_if_not_exist(save_dir, rm=False)

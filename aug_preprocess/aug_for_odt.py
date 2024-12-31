@@ -24,7 +24,7 @@ def covert_yolo_2_xyxy(lbl, w, h):
     return arr_tl_w, arr_tl_h, arr_br_w, arr_br_h, arr_id
 
 
-def aug_odt(base_dir, split='val', dst_img_suffix='.jpg', dst_lbl_suffix='.txt'):
+def imgaug_odt(base_dir, split='val', dst_img_suffix='.jpg', dst_lbl_suffix='.txt'):
     src_img_dir = os.path.join(base_dir, split, 'images')
     src_lbl_dir = os.path.join(base_dir, split, 'labels')
     save_img_dir = os.path.join(base_dir + '_aug', split, 'images')

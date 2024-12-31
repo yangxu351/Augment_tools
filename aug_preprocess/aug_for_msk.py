@@ -7,7 +7,7 @@ import imgaug as ia
 from utils import make_dir_if_not_exist
 
 
-def aug_msk(base_dir, split='val', dst_suffix='.jpg'):
+def imgaug_msk(base_dir, split='val', dst_suffix='.jpg'):
     src_img_dir = os.path.join(base_dir, split, 'images')
     src_msk_dir = os.path.join(base_dir, split, 'masks')
     save_img_dir = os.path.join(base_dir + '_aug',split, 'images')

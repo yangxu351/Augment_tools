@@ -1,7 +1,7 @@
 import argparse
-from aug_preprocess.aug_for_cls import aug_cls
-from aug_preprocess.aug_for_odt import aug_odt
-from aug_preprocess.aug_for_msk import aug_msk
+from aug_preprocess.aug_for_cls import imgaug_cls
+from aug_preprocess.aug_for_odt import imgaug_odt
+from aug_preprocess.aug_for_msk import imgaug_msk
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -13,12 +13,16 @@ if __name__ == '__main__':
     parser.add_argument('--img_suffix', type=str, default='.jpg', help='.png .jpg')
     parser.add_argument('--lbl_suffix', type=str, default='.txt', help='.txt')
     args = parser.parse_args()
-    
+
+    # use ImgAug
     if args.task == 'cls':
-        aug_cls(args.base_dir, args.split)
+        imgaug_cls(args.base_dir, args.split)
     elif args.task == 'odt':
-        aug_odt(args.base_dir, args.split)
+        imgaug_odt(args.base_dir, args.split)
     elif args.task == 'seg':
-        aug_msk(args.base_dir, args.split)
+        imgaug_msk(args.base_dir, args.split)
     else:
         print('please input task!!!')
+
+    # use Albumentations
+    
