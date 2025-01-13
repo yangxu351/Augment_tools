@@ -150,17 +150,21 @@ def poisson_noise(degree='low'):
 
 def saltpepper(degree='low'):
     if degree=='high':
-        amount=(0.04,0.06), salt_vs_pepper=(0.4,0.6)
+        amount=(0.04,0.06)
+        salt_vs_pepper=(0.4,0.6)
     else: # low
-        amount=(0.01,0.03), salt_vs_pepper=(0.4,0.6)
+        amount=(0.01,0.03) 
+        salt_vs_pepper=(0.4,0.6)
     return alb.SaltAndPepper(amount=amount, salt_vs_pepper=salt_vs_pepper, p=1)
 
 
 def gaussian_blur(degree='low'):
     if degree=='high':
-        blur_limit=(5,7), sigma_limit=(0.1,2)
+        blur_limit=(5,7)
+        sigma_limit=(0.1,2)
     else: # low
-        blur_limit=(3,4), sigma_limit=(0.1,2)
+        blur_limit=(3,4)
+        sigma_limit=(0.1,2)
     return alb.GaussianBlur(blur_limit=blur_limit, sigma_limit=sigma_limit, p=1)
 
 
