@@ -72,7 +72,7 @@ data_aug
         |__*.png/*.jpg/*.bmp/*.tiff
 ```
 
-# 目标检测数据增强
+# 目标检测数据增强 (图像xyz.png 与标注文件xyz.txt 的名字要一致)
 
 ```
 data
@@ -95,12 +95,12 @@ data
 
 ### 其中*.txt 满足归一化后yolo标注格式: ID cw ch w h
 ### label 格式详解见[[各种格式](https://albumentations.ai/docs/getting_started/bounding_boxes_augmentation/)]
-### default (normalized) [ID xmin ymin xmax ymax] [2 0.153125 0.71875 0.65625 0.9625]
-### voc (unnormalized) [ID xmin ymin xmax ymax] [2 98 345 420 462]
-### coco (unnormalized) [ID center_x center_y width height] [2 98 345 322 117]
-### yolo (normalized) [ID center_x center_y width height] [2 0.4046875 0.840625 0.503125 0.24375]
+### default (albumentations) 归一化 [ID xmin ymin xmax ymax] 如 [2 0.1531 0.7187 0.6562 0.9625]
+### voc (pascal_voc) 未归一化 [ID xmin ymin xmax ymax] 如 [2 98 345 420 462]
+### coco 未归一化 [ID center_x center_y width height] 如 [2 98 345 322 117]
+### yolo 归一化 [ID center_x center_y width height] 如 [2 0.4046 0.8406 0.5031 0.2437]
 
-# 语义分割数据增强
+# 语义分割数据增强 (图像xyz.png 与标注文件xyz.jpg 的名字要一致)
 ```
 data
 |__train
