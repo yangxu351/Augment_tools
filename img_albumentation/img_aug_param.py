@@ -55,8 +55,8 @@ def get_trans():
     return dict_trans
 
 ######## geometric 
-def scale(degree='down'): # 缩放 1 means no change
-    if degree=='up':
+def scale(direction='down'): # 缩放 1 means no change
+    if direction=='up':
         scale=(1.1, 1.3)
     else: # 'down'
         scale=(0.7, 0.9)
@@ -87,46 +87,46 @@ def rotate(direction='right'): # 旋转
     return alb.Rotate(limit=limit, p=1.)
 
 
-def hv_flip(hori_or_vert="V"): # 翻转
+def hv_flip(direction="V"): # 翻转
     '''
     hori_or_vert ["V", "H"]
     '''
-    if hori_or_vert == "H":
+    if direction == "H":
         return alb.HorizontalFlip(p=1.)
     else: # "V"
         return alb.VerticalFlip(p=1.)
 
 
 ######## color
-def brightness(degree='high'):
-    if degree=='low':
-        brightness=(0.7, 0.9)
-    else:# 'high'
+def brightness(degree='low'):
+    if degree=='high':
         brightness=(1.1, 1.3)
+    else:# 'low'
+        brightness=(0.7, 0.9)
     return alb.ColorJitter(brightness=brightness, saturation=0, contrast=0, hue=0, p=1)
         
 
-def contrast(degree='high'):
-    if degree=='low':
-        contrast=(0.7, 0.9)
-    else:# 'high'
+def contrast(degree='low'):
+    if degree=='high':
         contrast=(1.1, 1.3)
+    else:# 'low'
+        contrast=(0.7, 0.9)
     return alb.ColorJitter(brightness=0, saturation=0, contrast=contrast, hue=0, p=1)
 
 
-def saturation(degree='high'):
-    if degree=='low':
-        saturation=(0.7, 0.9)
-    else:# 'high'
+def saturation(degree='low'):
+    if degree=='high':
         saturation=(1.1, 1.3)
+    else:# 'low'
+        saturation=(0.7, 0.9)
     return alb.ColorJitter(brightness=0, saturation=saturation, contrast=0, hue=0, p=1)
 
 
-def hue(degree='high'):
-    if degree=='low':
+def hue(degree='low'):
+    if degree=='high':
+        hue=(0.1, 0.5)
+    else:# 'low'
         hue=(-0.5, -0.1)
-    else:# 'high'
-        hue(0.1, 0.5)
     return alb.ColorJitter(brightness=0, saturation=0, contrast=0, hue=hue, p=1)
 
 
