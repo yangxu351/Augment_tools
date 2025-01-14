@@ -44,7 +44,7 @@ def get_trans():
         'shadow':plasma_shadow,
         'posterize':posterize,
         'sun':random_sun_flare,
-        'beta_noise':beta_noise,
+        'overshoot':overshoot,
         'rain_spatter':rain_spatter,
         'mud_spatter':mud_spatter,
         'random_gravel':random_gravel,
@@ -73,10 +73,12 @@ def translate(direction='right'): # 平移
 
 def crop(degree='low'): # 剪切 
     if degree=='high':
-        px = ([0.2,0.4],[0.2,0.4],[0.2,0.4],[0.2,0.4])
+        percent = ([0.2,0.4],[0.2,0.4],[0.2,0.4],[0.2,0.4])
+        # percent = 0.4
     else: # low
-        px = ([0.05,0.15],[0.05,0.15],[0.05,0.15],[0.05,0.15])
-    return alb.CropAndPad(px=px, boder_mode=cv2.BORDER_REPLICATE, p=1)
+        percent = ([0.05,0.15],[0.05,0.15],[0.05,0.15],[0.05,0.15])
+        # percent = 0.1
+    return alb.CropAndPad(percent=percent, border_mode=cv2.BORDER_REPLICATE, p=1)
 
 
 def rotate(direction='right'): # 旋转
@@ -137,7 +139,7 @@ def gaussian_noise(degree='low'):
         std_range=(0.05, 0.15)
     else:
         std_range=(0.2, 0.3)
-    return alb.GaussNoise(std_range=std_range, mean_range=0, p=1)
+    return alb.GaussNoise(std_range=std_range,  p=1)
 
 
 def poisson_noise(degree='low'):
@@ -161,10 +163,10 @@ def saltpepper(degree='low'):
 def gaussian_blur(degree='low'):
     if degree=='high':
         blur_limit=(5,7)
-        sigma_limit=(0.1,2)
+        sigma_limit=(0.5,2)
     else: # low
-        blur_limit=(3,4)
-        sigma_limit=(0.1,2)
+        blur_limit=(3,5)
+        sigma_limit=(0.5,2)
     return alb.GaussianBlur(blur_limit=blur_limit, sigma_limit=sigma_limit, p=1)
 
 
@@ -172,8 +174,8 @@ def median_blur(degree='low'):
     if degree=='high':
         blur_limit=(5,7)
     else: # low
-        blur_limit=(3,4)
-    return alb.median_blur(blur_limit=blur_limit, p=1.)
+        blur_limit=(3,5)
+    return alb.MedianBlur(blur_limit=blur_limit, p=1.)
 
 
 
@@ -210,21 +212,21 @@ def random_snow(degree='low'):
     method []'bleach','texture']
     '''
     if degree=='high':
-        snow_point_range=(0.2,0.3) 
+        snow_point_range=(0.5,0.6) 
         brightness_coeff=2 
     else:
-        snow_point_range=(0.1,0.15) 
-        brightness_coeff=1 
-    return alb.RandomSnow(snow_point_range=snow_point_range, brightness_coeff=brightness_coeff, method='texture', p=1)
+        snow_point_range=(0.2,0.3) 
+        brightness_coeff=1.5 
+    return alb.RandomSnow(snow_point_range=snow_point_range, brightness_coeff=brightness_coeff, p=1)
 
 
 # FIXME:非要求的
 #### additive
 def shear(direction='left'): # 扭曲，剪切 
     if direction == 'right':
-        shear=(-45, -5)
+        shear=(-15, -5)
     else:# 'left'
-        shear=(5, 45)
+        shear=(5, 15)
     return alb.Affine(shear=shear, border_mode=cv2.BORDER_REPLICATE, p=1.)
 
 
@@ -241,19 +243,19 @@ def clahe(degree='low'):
 
 def defocus(degree='low'):
     if degree=='high':
-        radius=(3,5)
+        radius=(4,5)
     else:# 'low'
-        radius=(6,10)
+        radius=(2,3)
     return alb.Defocus(radius=radius, p=1.)
 
 
 def glassblur(degree='low'):
     if degree=='high':
+        sigma = 0.5
+        max_delta = 3
+    else:# 'low'
         sigma = 0.1
         max_delta = 2
-    else:# 'low'
-        sigma = 0.7
-        max_delta = 4
     return alb.GlassBlur(sigma=sigma, max_delta=max_delta, p=1.)
 
 
@@ -300,20 +302,12 @@ def random_sun_flare(degree='low'):
         num_flare_circles_range=(1,2)
     return alb.RandomSunFlare(src_radius=src_radius, num_flare_circles_range=num_flare_circles_range, method='physics_based', p=1.)
 
-def beta_noise(degree='low'):
+def overshoot(degree='low'):
     if degree=='high':
-        noise_params = {
-            'alpha_range':(0.5, 1.5),
-            'beta_range': (0.5, 1.5),
-            'scale_range': (0.3, 0.4)
-        }
+        blur_limit = (5, 9)
     else:# low
-        noise_params = {
-            'alpha_range':(0.5, 1.5),
-            'beta_range': (0.5, 1.5),
-            'scale_range': (0.15, 0.25)
-        }
-    return alb.AdditiveNoise(noise_type='beta', spatial_mode='shared', noise_params=noise_params, p=1.)
+        blur_limit = (10, 15)
+    return alb.RingingOvershoot(blur_limit=blur_limit, p=1.)
 
 
 def rain_spatter(degree='low'):
@@ -339,17 +333,17 @@ def mud_spatter(degree='low'):
 
 def random_gravel(degree='low'):
     if degree=='high':
-        num_patches=random.choice([3,4,5])
+        num_patches=random.choice([_ for _ in range(6,10)])
     else:# 'low'
-        num_patches=random.choice([1,2])
+        num_patches=random.choice([_ for _ in range(3,6)])
     return alb.RandomGravel(number_of_patches=num_patches, p=1.)
 
 
 def super_pixels(degree='low'):
     if degree=='high':
-        p_replace=(0.08,0.13)
+        p_replace=(0.06,0.1)
     else:# 'low'
-        p_replace=(0.01,0.07)
+        p_replace=(0.01,0.05)
     return alb.Superpixels(p_replace=p_replace, p=1.)
 
 
