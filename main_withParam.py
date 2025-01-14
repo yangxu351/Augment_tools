@@ -12,7 +12,7 @@ if __name__ == '__main__':
     parser.add_argument('--task', type=str, default='odt', help='[cls, odt, seg]')
     parser.add_argument('--img_suffix', type=str, default='.jpg', help='.png .jpg')
     parser.add_argument('--lbl_suffix', type=str, default='.txt', help='.txt')
-    parser.add_argument('--lbl_format', type=str, default='default', help='coco, voc, yolo, default')
+    parser.add_argument('--lbl_format', type=str, default='coco', help='coco, voc, yolo, default')
     args = parser.parse_args()
 
     # use ImgAug
@@ -53,7 +53,7 @@ if __name__ == '__main__':
         'shadow':{'degree':'low'}, # 'high'
         'posterize':{'degree':'low'}, # 'high'
         'sun':{'degree':'low'}, # 'high'
-        'beta_noise':{'degree':'low'}, # 'high'
+        'overshoot':{'degree':'low'}, # 'high'
         'rain_spatter':{'degree':'low'}, # 'high'
         'mud_spatter':{'degree':'low'}, # 'high'
         'random_gravel':{'degree':'low'}, # 'high'
@@ -63,9 +63,40 @@ if __name__ == '__main__':
     '''
     # use Albumentations
     method_params = {
-        'rotate': {'direction':'right'},
-        'flip': {'direction':'H'},
-        'scale': {'direction':'up'}
+        'scale': {'direction':'up'}, # 'down'
+        'translate':{'direction':'left'}, # 'right'
+        'crop':{'degree':'low'}, # 'high'
+        'flip': {'direction':'H'}, #  'V'
+        'rotate': {'direction':'right'}, # 'left'
+        'brightness': {'degree':'low'}, # 'high'
+        'contrast': {'degree':'low'}, # 'high'
+        'saturation': {'degree':'low'}, # 'high'
+        'hue': {'degree':'low'}, # 'high'
+        'gaussain_noise':{'degree':'low'}, # 'high'
+        'poisson_noise':{'degree':'low'}, # 'high'
+        'saltpepper':{'degree':'low'}, # 'high'
+        'gaussain_blur':{'degree':'low'}, # 'high'
+        'mean_blur': {'degree':'low'}, # 'high'
+        'fog':{'degree':'low'}, # 'high'
+        'rain':{'degree':'low'}, # 'high'
+        'snow':{'degree':'low'}, # 'high'
+        'shear':{'direction':'right'}, # 'left'
+        'clahe':{'degree':'low'}, # 'high'
+        'defocus':{'degree':'low'}, # 'high'
+        'glassblur':{'degree':'low'}, # 'high'
+        'multicative_noise':{'degree':'low'}, # 'high'
+        'illumination':{'degree':'low'}, # 'high'
+        'shadow':{'degree':'low'}, # 'high'
+        'posterize':{'degree':'low'}, # 'high'
+        'sun':{'degree':'low'}, # 'high'
+        'overshoot':{'degree':'low'}, # 'high'
+        'rain_spatter':{'degree':'low'}, # 'high'
+        'mud_spatter':{'degree':'low'}, # 'high'
+        'random_gravel':{'degree':'low'}, # 'high'
+        'super_pixels':{'degree':'low'}, # 'high'
+        'sepia':{}, # None
+        'deformation':{'degree':'low'}, # 'high'
+
     }
     if args.task == 'cls':
         alb_aug_cls(args.base_dir, method_params=method_params, exec_num=2, dst_img_suffix=args.img_suffix)
