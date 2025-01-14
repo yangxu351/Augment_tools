@@ -306,7 +306,7 @@ def overshoot(degree='low'):
     if degree=='high':
         blur_limit = (5, 9)
     else:# low
-        blur_limit = (10, 15)
+        blur_limit = (11, 15)
     return alb.RingingOvershoot(blur_limit=blur_limit, p=1.)
 
 
