@@ -37,7 +37,7 @@ def alb_aug_cls(base_dir, split='val', method_params={}, combine=False, exec_num
                 make_dir_if_not_exist(c_save_dir, rm=True)
                 for n in img_names[:2]:# FIXME:
                     img = np.array(Image.open(os.path.join(source_dir,cf,n)))
-                    img_name_pref, img_name_suff = img_names.split('.')
+                    img_name_pref, img_name_suff = n.split('.')
                     # img_list.append(img)
                     n_img = aug(image=img)['image']
                     n_file = os.path.join(c_save_dir, f"{img_name_pref}_ex{en+1}_{formatted_time}.{img_name_suff}")

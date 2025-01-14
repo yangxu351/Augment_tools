@@ -6,14 +6,18 @@ from aug_preprocess.aug_for_msk_withParam import alb_aug_msk
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     # parser.add_argument('--base_dir', type=str, default='F:/Public_Dataset/ForAug/MSTAR', help='classification  test')
-    # parser.add_argument('--base_dir', type=str, default='F:/Public_Dataset/ForAug/COCO', help='object detection val20217')
-    parser.add_argument('--base_dir', type=str, default='F:/Public_Dataset/ForAug/Lunar', help='segmentation train')
-    parser.add_argument('--split', type=str, default='train', help='[test, val2017, train]')
-    parser.add_argument('--task', type=str, default='seg', help='[cls, odt, seg]')
-    parser.add_argument('--img_suffix', type=str, default='.jpg', help='.png .jpg')
-    parser.add_argument('--lbl_suffix', type=str, default='.txt', help='.txt')
+    # parser.add_argument('--split', type=str, default='test', help='[test, val2017, train]')
+    # parser.add_argument('--task', type=str, default='cls', help='[cls, odt, seg]')
+
+    parser.add_argument('--base_dir', type=str, default='F:/Public_Dataset/ForAug/COCO', help='object detection val20217')        
+    parser.add_argument('--split', type=str, default='val2017', help='[test, val2017, train]')
+    parser.add_argument('--task', type=str, default='odt', help='[cls, odt, seg]')
     parser.add_argument('--lbl_format', type=str, default='coco', help='coco, voc, yolo, default')
-    parser.add_argument('--dst_suffix', type=str, default='.png', help='for segmentations .png .jpg')
+
+    # parser.add_argument('--base_dir', type=str, default='F:/Public_Dataset/ForAug/Lunar', help='segmentation train')
+    # parser.add_argument('--split', type=str, default='train', help='[test, val2017, train]')
+    # parser.add_argument('--task', type=str, default='seg', help='[cls, odt, seg]')
+
     args = parser.parse_args()
     
     # use Albumentations
@@ -54,9 +58,9 @@ if __name__ == '__main__':
 
     }
     if args.task == 'cls':
-        alb_aug_cls(args.base_dir, method_params=method_params, exec_num=2, dst_img_suffix=args.img_suffix)
+        alb_aug_cls(args.base_dir, method_params=method_params, exec_num=2)
     elif args.task == 'odt':
-        alb_aug_odt(args.base_dir, args.split, lbl_format=args.lbl_format, method_params=method_params, exec_num=2, dst_img_suffix=args.img_suffix, dst_lbl_suffix=args.lbl_suffix)
+        alb_aug_odt(args.base_dir, args.split, lbl_format=args.lbl_format, method_params=method_params, exec_num=2)
     elif args.task == 'seg':
         alb_aug_msk(args.base_dir, args.split, method_params=method_params, exec_num=2)
     else:
