@@ -26,11 +26,11 @@ if __name__ == '__main__':
     
     # use Albumentations
     method_params = {
-        'scale': {'direction':'up'}, # 'down'
-        'translate':{'direction':'left'}, # 'right'
+        'scale': {'direction':'up'}, # 'down'-------------
+        'translate':{'direction':'left'}, # 'right'-------------
         'crop':{'degree':'low'}, # 'high'
-        'flip': {'direction':'H'}, #  'V'
-        'rotate': {'direction':'right'}, # 'left'
+        'flip': {'direction':'H'}, #  'V'-------------
+        'rotate': {'direction':'right'}, # 'left'-------------
         'brightness': {'degree':'low'}, # 'high'
         'contrast': {'degree':'low'}, # 'high'
         'saturation': {'degree':'low'}, # 'high'
@@ -41,14 +41,14 @@ if __name__ == '__main__':
         'gaussain_blur':{'degree':'low'}, # 'high'
         'mean_blur': {'degree':'low'}, # 'high'
         'fog':{'degree':'low'}, # 'high'
-        'rain':{'degree':'low'}, # 'high'
+        'rain':{'degree':'light'}, # 'medium' 'heavy'-------------
         'snow':{'degree':'low'}, # 'high'
-        'shear':{'direction':'right'}, # 'left'
+        'shear':{'direction':'right'}, # 'left'-------------
         'clahe':{'degree':'low'}, # 'high'
         'defocus':{'degree':'low'}, # 'high'
         'glassblur':{'degree':'low'}, # 'high'
         'multicative_noise':{'degree':'low'}, # 'high'
-        'illumination':{'degree':'low'}, # 'high'
+        'illumination':{'degree':'cool'}, # 'warm' -------------
         'shadow':{'degree':'low'}, # 'high'
         'posterize':{'degree':'low'}, # 'high'
         'sun':{'degree':'low'}, # 'high'
@@ -70,40 +70,3 @@ if __name__ == '__main__':
     else:
         print('please input task!!!')
 
-
-    '''
-        'scale': {'direction':'up'}, # 'down'
-        'translate':{'direction':'left'}, # 'right'
-        'crop':{'degree':'low'}, # 'high'
-        'flip': {'direction':'H'}, #  'V'
-        'rotate': {'direction':'right'}, # 'left'
-        'brightness': {'degree':'low'}, # 'high'
-        'contrast': {'degree':'low'}, # 'high'
-        'saturation': {'degree':'low'}, # 'high'
-        'hue': {'degree':'low'}, # 'high'
-        'gaussain_noise':{'degree':'low'}, # 'high'
-        'poisson_noise':{'degree':'low'}, # 'high'
-        'saltpepper':{'degree':'low'}, # 'high'
-        'gaussain_blur':{'degree':'low'}, # 'high'
-        'mean_blur': {'degree':'low'}, # 'high'
-        'fog':{'degree':'low'}, # 'high'
-        'rain':{'degree':'low'}, # 'high'
-        'snow':{'degree':'low'}, # 'high'
-        
-        'shear':{'direction':'right'}, # 'left'
-        'clahe':{'degree':'low'}, # 'high'
-        'defocus':{'degree':'low'}, # 'high'
-        'glassblur':{'degree':'low'}, # 'high'
-        'multicative_noise':{'degree':'low'}, # 'high'
-        'illumination':{'degree':'low'}, # 'high'
-        'shadow':{'degree':'low'}, # 'high'
-        'posterize':{'degree':'low'}, # 'high'
-        'sun':{'degree':'low'}, # 'high'
-        'overshoot':{'degree':'low'}, # 'high'
-        'rain_spatter':{'degree':'low'}, # 'high'
-        'mud_spatter':{'degree':'low'}, # 'high'
-        'random_gravel':{'degree':'low'}, # 'high'
-        'super_pixels':{'degree':'low'}, # 'high'
-        'sepia':{}, # None
-        'deformation':{'degree':'low'}, # 'high'
-    '''
