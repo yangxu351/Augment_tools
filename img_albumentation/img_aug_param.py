@@ -55,8 +55,8 @@ def get_trans():
     return dict_trans
 
 ######## geometric 
-def scale(direction='down'): # 缩放 1 means no change
-    if direction=='up':
+def scale(direction='zoomin'): # 缩放 1 means no change
+    if direction=='zoomout':
         scale=(1.1, 1.3)
     else: # 'down'
         scale=(0.7, 0.9)
