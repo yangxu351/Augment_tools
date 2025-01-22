@@ -21,12 +21,16 @@ if __name__ == '__main__':
     parser.add_argument('--base_dir', type=str, default='F:/Public_Dataset/ForAug/Lunar', help='segmentation train')
     parser.add_argument('--split', type=str, default='train', help='[test, val2017, train]')
     parser.add_argument('--task', type=str, default='seg', help='[cls, odt, seg]')
+    parser.add_argument('--exec_num', type=int, default=1, help='数据增强次数')
+
+    parser.add_argument('--method_params', type=str, default="{'scale':{'direction':'up'}}", help='')
+
 
     args = parser.parse_args()
     
     # use Albumentations
     method_params = {
-        'scale': {'direction':'up'}, # 'down'-------------
+        'scale': {'direction':'zoonin'}, # 'zoomout'-------------
         'translate':{'direction':'left'}, # 'right'-------------
         'crop':{'degree':'low'}, # 'high'
         'flip': {'direction':'H'}, #  'V'-------------
@@ -43,30 +47,30 @@ if __name__ == '__main__':
         'fog':{'degree':'low'}, # 'high'
         'rain':{'degree':'light'}, # 'medium' 'heavy'-------------
         'snow':{'degree':'low'}, # 'high'
-        'shear':{'direction':'right'}, # 'left'-------------
-        'clahe':{'degree':'low'}, # 'high'
-        'defocus':{'degree':'low'}, # 'high'
+        'shear':{'direction':'left'}, # 'right'------------- # 错切变换
+        'clahe':{'degree':'low'}, # 'high' # 直方图均衡
+        'defocus':{'degree':'low'}, # 'high' # 散焦模糊
         'glassblur':{'degree':'low'}, # 'high'
         'multicative_noise':{'degree':'low'}, # 'high'
-        'illumination':{'degree':'cool'}, # 'warm' -------------
+        'illumination':{'degree':'cool'}, # 'warm' -------------# 照明变换
         'shadow':{'degree':'low'}, # 'high'
-        'posterize':{'degree':'low'}, # 'high'
-        'sun':{'degree':'low'}, # 'high'
-        'overshoot':{'degree':'low'}, # 'high'
-        'rain_spatter':{'degree':'low'}, # 'high'
-        'mud_spatter':{'degree':'low'}, # 'high'
-        'random_gravel':{'degree':'low'}, # 'high'
+        'posterize':{'degree':'low'}, # 'high'  #颜色通道位数变换
+        'sun':{'degree':'low'}, # 'high'        #耀斑
+        'overshoot':{'degree':'low'}, # 'high'  #随机伪影
+        'rain_spatter':{'degree':'low'}, # 'high' # 雨飞溅
+        'mud_spatter':{'degree':'low'}, # 'high'  # 泥飞溅
+        'random_gravel':{'degree':'low'}, # 'high' # 随机砾石
         'super_pixels':{'degree':'low'}, # 'high'
-        'sepia':{}, # None
-        'deformation':{'degree':'low'}, # 'high'
+        'sepia':{}, # None # 棕褐色滤镜------------
+        'deformation':{'degree':'low'}, # 'high' # 非刚性形变
 
     }
     if args.task == 'cls':
-        alb_aug_cls(args.base_dir, args.split, method_params=method_params, exec_num=2)
+        alb_aug_cls(args.base_dir, args.split, method_params=method_params, exec_num=args.exec_num)
     elif args.task == 'odt':
-        alb_aug_odt(args.base_dir, args.split, lbl_format=args.lbl_format, method_params=method_params, exec_num=2)
+        alb_aug_odt(args.base_dir, args.split, lbl_format=args.lbl_format, method_params=method_params, exec_num=args.exec_num)
     elif args.task == 'seg':
-        alb_aug_msk(args.base_dir, args.split, method_params=method_params, exec_num=2)
+        alb_aug_msk(args.base_dir, args.split, method_params=method_params, exec_num=args.exec_num)
     else:
         print('please input task!!!')
 
