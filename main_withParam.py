@@ -30,7 +30,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--base_dir', type=str, default='F:/Public_Dataset/ForAug/Lunar', help='segmentation train')
     parser.add_argument('--task', type=str, default='seg', help='[cls, odt, seg]')
-    parser.add_argument('--split', type=str, default=['train'], help='[test, train]')
+    parser.add_argument('--split', type=str, nargs='+', default=['train'], help='[test, train]')
     parser.add_argument('--odt_lbl_format', type=str, default='labelme', help='[labelme, voc, yolo, coco]')
     parser.add_argument('--exec_num', type=int, default=1, help='数据增强次数')
 
