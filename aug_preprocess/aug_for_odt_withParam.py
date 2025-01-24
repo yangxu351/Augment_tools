@@ -61,7 +61,7 @@ def covert_coco_2_default(lbl, w, h):
     return arr_coor
 
 
-def alb_aug_odt(base_dir, split='val', lbl_format='default', method_params={}, combine=False, exec_num=1):
+def alb_aug_odt(base_dir, split=['val'], lbl_format='default', method_params={}, combine=False, exec_num=1):
     '''
     lbl_format: 'coco', 'pascal_voc', 'albumentations', 'yolo'
     '''
@@ -70,60 +70,59 @@ def alb_aug_odt(base_dir, split='val', lbl_format='default', method_params={}, c
     elif lbl_format=='voc':
         lbl_format='pascal_voc'
 
-    src_img_dir = os.path.join(base_dir, split, 'images')
-    src_lbl_dir = os.path.join(base_dir, split, 'labels')
-    save_img_dir = os.path.join(base_dir, split + '_albaug_param', 'images')
-    # make_dir_if_not_exist(save_img_dir, rm=True)
-    save_lbl_dir = os.path.join(base_dir, split + '_albaug_param', 'labels')
-    # make_dir_if_not_exist(save_lbl_dir, rm=True)
-
-    ori_img_names = os.listdir(src_img_dir)
-    ori_img_names.sort()
-    ori_lbl_names = os.listdir(src_lbl_dir)
-    ori_lbl_names.sort()
-    # names = [os.path.basename(om).split('.')[0] for om in ori_img_names]
-
     all_trans = albaug.get_trans()
     dict_trans = {}
     for method, params in method_params.items():
         dict_trans[method] = all_trans[method](**params)
+    
+    for sp in split:
+        src_img_dir = os.path.join(base_dir, 'inputs', f'{sp}_dataset', 'images')
+        src_lbl_dir = os.path.join(base_dir, 'inputs', f'{sp}_dataset', 'labels')
+        save_img_dir = os.path.join(base_dir, 'outputs', f'Alb_aug_{sp}_dataset', 'images')
+        # make_dir_if_not_exist(save_img_dir, rm=True)
+        save_lbl_dir = os.path.join(base_dir, 'outputs', f'Alb_aug_{sp}_dataset', 'labels')
+        # make_dir_if_not_exist(save_lbl_dir, rm=True)
 
+        ori_img_names = os.listdir(src_img_dir)
+        ori_img_names.sort()
+        ori_lbl_names = os.listdir(src_lbl_dir)
+        ori_lbl_names.sort()
+        # names = [os.path.basename(om).split('.')[0] for om in ori_img_names]
 
-    for ix, img_name in enumerate(ori_img_names[:2]):
-        img = np.array(Image.open(os.path.join(src_img_dir, img_name)))
-        img_name_pref, img_name_suff = img_name.split('.')
-        print(' ori shape',  img.shape) # h,w,c
-        h, w, c = img.shape
-        # img_list.append(img)
-        lbl_file = os.path.join(src_lbl_dir, f'{ori_lbl_names[ix]}')
-        lbl_name_pref, lbl_name_suff = ori_lbl_names[ix].split('.')
-        print('--lbl---', lbl_file)
-        lbl = pd.read_csv(lbl_file, header=None, delimiter=' ')
-        
-        arr_coor = lbl.iloc[:,1:5].to_numpy()
-        arr_ids = lbl.iloc[:, 0].to_numpy()
-        
-        current_time = datetime.datetime.now()
-        formatted_time = current_time.strftime("%m%d-%H%M")
-        for key, aug in dict_trans.items():
-            o_save_img_dir = os.path.join(save_img_dir, key)
-            make_dir_if_not_exist(o_save_img_dir, rm=True)
-            o_save_lbl_dir = os.path.join(save_lbl_dir, key)
-            make_dir_if_not_exist(o_save_lbl_dir, rm=True)
-            for en in range(exec_num):
+        for ix, img_name in enumerate(ori_img_names): #FIXME:
+            img = np.array(Image.open(os.path.join(src_img_dir, img_name)))
+            img_name_pref, img_name_suff = img_name.split('.')
+            # print(' ori shape',  img.shape) # h,w,c
+            h, w, c = img.shape
+            # img_list.append(img)
+            lbl_file = os.path.join(src_lbl_dir, f'{ori_lbl_names[ix]}')
+            lbl_name_pref, lbl_name_suff = ori_lbl_names[ix].split('.')
+            # print('--lbl---', lbl_file)
+            lbl = pd.read_csv(lbl_file, header=None, delimiter=' ')
             
-                transform = alb.Compose([aug], bbox_params=alb.BboxParams(format=lbl_format, label_fields=['category_ids']))
-                dict_img_bbx = transform(image=img, bboxes=arr_coor, category_ids=arr_ids)
-                new_img = dict_img_bbx['image']
-                new_bbx = dict_img_bbx['bboxes']
-                cids = dict_img_bbx['category_ids']
-                n_img_file = os.path.join(o_save_img_dir, f'{img_name_pref}_ex{en+1}_{formatted_time}.{img_name_suff}')
-                Image.fromarray(new_img).save(n_img_file)
-                n_lbl_file = os.path.join(o_save_lbl_dir, f'{lbl_name_pref}_ex{en+1}_{formatted_time}.{lbl_name_suff}')
-                with open(n_lbl_file, 'w') as img_name:
-                    for jx, ann in enumerate(new_bbx):
-                        img_name.write("%s %s %s %s %s\n" % (int(cids[jx]), round(ann[0],4), round(ann[1],4), round(ann[2],4), round(ann[3],4)))
-                img_name.close()
+            arr_coor = lbl.iloc[:,1:5].to_numpy()
+            arr_ids = lbl.iloc[:, 0].to_numpy()
+            
+            current_time = datetime.datetime.now()
+            formatted_time = current_time.strftime("%m%d-%H%M")
+            for key, aug in dict_trans.items():
+                o_save_img_dir = os.path.join(save_img_dir, key)
+                make_dir_if_not_exist(o_save_img_dir, rm=True)
+                o_save_lbl_dir = os.path.join(save_lbl_dir, key)
+                make_dir_if_not_exist(o_save_lbl_dir, rm=True)
+                for en in range(exec_num):
+                    transform = alb.Compose([aug], bbox_params=alb.BboxParams(format=lbl_format, label_fields=['category_ids']))
+                    dict_img_bbx = transform(image=img, bboxes=arr_coor, category_ids=arr_ids)
+                    new_img = dict_img_bbx['image']
+                    new_bbx = dict_img_bbx['bboxes']
+                    cids = dict_img_bbx['category_ids']
+                    n_img_file = os.path.join(o_save_img_dir, f'{img_name_pref}_ex{en+1}_{formatted_time}.{img_name_suff}')
+                    Image.fromarray(new_img).save(n_img_file)
+                    n_lbl_file = os.path.join(o_save_lbl_dir, f'{lbl_name_pref}_ex{en+1}_{formatted_time}.{lbl_name_suff}')
+                    with open(n_lbl_file, 'w') as img_name:
+                        for jx, ann in enumerate(new_bbx):
+                            img_name.write("%s %.4f %.4f %.4f %.4f\n" % (int(cids[jx]), round(ann[0],4), round(ann[1],4), round(ann[2],4), round(ann[3],4)))
+                    img_name.close()
 
         # if lbl_format=='yolo': # (normalized) [ID center_x center_y width height] [2 0.4046875 0.840625 0.503125 0.24375]
         #     arr_coor = covert_yolo_2_default(lbl, w, h)
